@@ -8,6 +8,13 @@ import authRoutes from './routes/authRoutes.js';
 
 dotenv.config();
 
+// DEBUG: Check if MONGO_URI is being read
+console.log('=== DEBUG INFO ===');
+console.log('PORT from env:', process.env.PORT);
+console.log('MONGO_URI exists:', !!process.env.MONGO_URI);
+console.log('MONGO_URI value:', process.env.MONGO_URI);
+console.log('==================');
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -27,6 +34,12 @@ app.get('/health', (req, res) => {
 app.get('/', (req, res) => {
   res.json({ message: 'Journals and Publication Website API' });
 });
+
+// Check if MONGO_URI is defined before connecting
+if (!process.env.MONGO_URI) {
+  console.error('❌ MONGO_URI is not defined in environment variables!');
+  process.exit(1);
+}
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)

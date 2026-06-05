@@ -8,13 +8,6 @@ import authRoutes from './routes/authRoutes.js';
 
 dotenv.config();
 
-// DEBUG: Check if MONGO_URI is being read
-console.log('=== DEBUG INFO ===');
-console.log('PORT from env:', process.env.PORT);
-console.log('MONGO_URI exists:', !!process.env.MONGO_URI);
-console.log('MONGO_URI value:', process.env.MONGO_URI);
-console.log('==================');
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -35,17 +28,16 @@ app.get('/', (req, res) => {
   res.json({ message: 'Journals and Publication Website API' });
 });
 
-// Check if MONGO_URI is defined before connecting
-if (!process.env.MONGO_URI) {
-  console.error('❌ MONGO_URI is not defined in environment variables!');
-  process.exit(1);
-}
+// DIRECT CONNECTION STRING - HARDCODED (TEMPORARY)
+// This WILL work on Render
+const MONGO_URI = "mongodb://kenkyupub_db_user:sampath8140@cluster0.of4owpq.mongodb.net:27017/kenkyu?ssl=true&authSource=admin&retryWrites=true&w=majority&directConnection=true";
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGO_URI)
+console.log('Connecting to MongoDB Atlas...');
+
+mongoose.connect(MONGO_URI)
   .then(() => {
     console.log('✅ MongoDB Connected Successfully');
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Server running on port ${PORT}`);
     });
   })

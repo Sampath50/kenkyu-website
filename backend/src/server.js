@@ -2,8 +2,6 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
-
-// Import routes
 import authRoutes from './routes/authRoutes.js';
 
 dotenv.config();
@@ -28,9 +26,8 @@ app.get('/', (req, res) => {
   res.json({ message: 'Journals and Publication Website API' });
 });
 
-// DIRECT CONNECTION STRING - HARDCODED (TEMPORARY)
-// This WILL work on Render
-const MONGO_URI = "mongodb://kenkyupub_db_user:sampath8140@cluster0.of4owpq.mongodb.net:27017/kenkyu?ssl=true&authSource=admin&retryWrites=true&w=majority&directConnection=true";
+// MongoDB Connection - HARDCODED for deployment
+const MONGO_URI = "mongodb://kenkyupub_db_user:Kenkyu2024@cluster0.of4owpq.mongodb.net:27017/kenkyu?ssl=true&authSource=admin&retryWrites=true&w=majority&directConnection=true";
 
 console.log('Connecting to MongoDB Atlas...');
 

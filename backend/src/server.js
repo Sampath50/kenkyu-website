@@ -26,8 +26,8 @@ app.get('/', (req, res) => {
   res.json({ message: 'Journals and Publication Website API' });
 });
 
-// MongoDB Connection - HARDCODED for deployment
-const MONGO_URI = "mongodb://kenkyupub_db_user:Kenkyu2024@cluster0.of4owpq.mongodb.net:27017/kenkyu?ssl=true&authSource=admin&retryWrites=true&w=majority&directConnection=true";
+// MongoDB Connection
+const MONGO_URI = process.env.MONGO_URI || "mongodb://kenkyupub_db_user:Kenkyu2024@cluster0.of4owpq.mongodb.net:27017/kenkyu?ssl=true&authSource=admin&retryWrites=true&w=majority";
 
 console.log('Connecting to MongoDB Atlas...');
 

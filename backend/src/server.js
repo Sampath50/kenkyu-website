@@ -1,3 +1,7 @@
+import dns from 'node:dns';
+dns.setServers(['1.1.1.1', '8.8.8.8']);
+dns.setDefaultResultOrder('ipv4first');
+
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -31,14 +35,17 @@ const MONGO_URI = process.env.MONGO_URI || "mongodb://kenkyupub_db_user:Kenkyu20
 
 console.log('Connecting to MongoDB Atlas...');
 
-mongoose.connect(MONGO_URI)
-  .then(() => {
-    console.log('✅ MongoDB Connected Successfully');
-    app.listen(PORT, '0.0.0.0', () => {
-      console.log(`🚀 Server running on port ${PORT}`);
-    });
-  })
-  .catch(err => {
-    console.error('❌ MongoDB Connection Error:', err.message);
-    process.exit(1);
+mongoose.connect(MONGO_URI, {
+  family: 4,
+  serverSelectionTimeoutMS: 10000
+})
+.then(() => {
+  console.log('✅ MongoDB Connected Successfully');
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Server running on port ${PORT}`);
   });
+})
+.catch(err => {
+  console.error('❌ MongoDB Connection Error:', err.message);
+  process.exit(1);
+});
